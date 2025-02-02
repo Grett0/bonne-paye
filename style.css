@@ -16,9 +16,10 @@ th, td {
     text-align: center;
 }
 
-th:nth-child(2), td:nth-child(2) { /* Agrandissement de la colonne "Solde (€)" */
-    width: 180px;
-    font-size: 18px;
+input {
+    width: 120px; /* CASE MONTANT AGRANDIE */
+    text-align: center;
+    font-size: 16px;
 }
 
 button {
@@ -26,11 +27,6 @@ button {
     padding: 8px;
     cursor: pointer;
     width: 60px;
-}
-
-input {
-    width: 60px;
-    text-align: center;
 }
 
 .dice-container {
@@ -44,7 +40,7 @@ input {
 }
 
 .calculator {
-    width: 300px;
+    width: 250px;
     margin: 30px auto;
     padding: 20px;
     border: 3px solid black;
@@ -59,4 +55,28 @@ input {
     padding: 10px;
     text-align: right;
     margin-bottom: 10px;
+}
+
+.calc-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.operations {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: 5px;
+}
+
+button {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
 }
