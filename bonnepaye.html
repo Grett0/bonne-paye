@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banque - La Bonne Paye</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        td:nth-child(1) {
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .actions input {
+            margin: 5px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        .actions button {
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background-color: #f0f0f0;
+        }
+        .tools {
+            margin-top: 20px;
+        }
+        .calculator input {
+            width: 60px;
+            margin: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .calculator input::placeholder {
+            color: #aaa;
+        }
+        .calculator button {
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .calculator button:hover {
+            background-color: #f0f0f0;
+        }
+        .dice button {
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .dice button:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Banque - La Bonne Paye</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Joueur</th>
+                <th>Solde (€)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="players">
+            <tr>
+                <td>Jimmy</td>
+                <td id="balance-1">1500</td>
+                <td class="actions">
+                    <input type="number" id="amount-1" placeholder="Montant">
+                    <button onclick="updateBalance(1, 'add')">Ajouter</button>
+                    <button onclick="updateBalance(1, 'subtract')">Retirer</button>
+                    <button onclick="takeLoan(1)">Prendre un crédit</button>
+                    <button onclick="repayLoan(1)">Rembourser</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Lily</td>
+                <td id="balance-2">1500</td>
+                <td class="actions">
+                    <input type="number" id="amount-2" placeholder="Montant">
+                    <button onclick="updateBalance(2, 'add')">Ajouter</button>
+                    <button onclick="updateBalance(2, 'subtract')">Retirer</button>
+                    <button onclick="takeLoan(2)">Prendre un crédit</button>
+                    <button onclick="repayLoan(2)">Rembourser</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Papy</td>
+                <td id="balance-3">1500</td>
+                <td class="actions">
+                    <input type="number" id="amount-3" placeholder="Montant">
+                    <button onclick="updateBalance(3, 'add')">Ajouter</button>
+                    <button onclick="updateBalance(3, 'subtract')">Retirer</button>
+                    <button onclick="takeLoan(3)">Prendre un crédit</button>
+                    <button onclick="repayLoan(3)">Rembourser</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Audrey</td>
+                <td id="balance-4">1500</td>
+                <td class="actions">
+                    <input type="number" id="amount-4" placeholder="Montant">
+                    <button onclick="updateBalance(4, 'add')">Ajouter</button>
+                    <button onclick="updateBalance(4, 'subtract')">Retirer</button>
+                    <button onclick="takeLoan(4)">Prendre un crédit</button>
+                    <button onclick="repayLoan(4)">Rembourser</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="tools">
+        <h2>Outils</h2>
+
+        <!-- Dé de 6 -->
+        <div class="dice">
+            <h3>Lancer un dé</h3>
+            <button onclick="rollDice()">Lancer le dé</button>
+            <p id="dice-result">Résultat : -</p>
+        </div>
+
+        <!-- Calculatrice -->
+        <div class="calculator">
+            <h3>Calculatrice</h3>
+            <input type="number" id="calc-num1" placeholder="Nombre 1" value="0"><br>
+			<input type="number" id="calc-num2" placeholder="Nombre 2" value="0"><br>
+            <input type="number" id="calc-num3" placeholder="Nombre 3" value="0"><br>
+            <input type="number" id="calc-num4" placeholder="Nombre 4" value="0"><br>
+            <input type="number" id="calc-num5" placeholder="Nombre 5" value="0"><br>
+            <input type="number" id="calc-num6" placeholder="Nombre 6" value="0"><br>
+            <input type="number" id="calc-num7" placeholder="Nombre 7" value="0"><br>
+            <input type="number" id="calc-num8" placeholder="Nombre 8" value="0"><br>
+            <input type="number" id="calc-num9" placeholder="Nombre 9" value="0"><br>
+            <input type="number" id="calc-num10" placeholder="Nombre 10" value="0"><br>
+            <button onclick="calculate('add')">+</button>
+            <button onclick="calculate('subtract')">-</button>
+            <button onclick="calculate('multiply')">×</button>
+            <button onclick="calculate('divide')">÷</button>
+            <p id="calc-result">Résultat : -</p>
+        </div>
+    </div>
+
+    <script>
+        function updateBalance(player, action) {
+            const amountInput = document.getElementById(`amount-${player}`);
+            const balanceCell = document.getElementById(`balance-${player}`);
+            const amount = parseFloat(amountInput.value);
+            if (isNaN(amount) || amount <= 0) {
+                alert("Veuillez entrer un montant valide.");
+                return;
+            }
+
+            let currentBalance = parseFloat(balanceCell.textContent);
+            if (action === 'add') {
+                currentBalance += amount;
+            } else if (action === 'subtract') {
+                if (currentBalance >= amount) {
+                    currentBalance -= amount;
+                } else {
+                    alert("Solde insuffisant.");
+                    return;
+                }
+            }
+
+            balanceCell.textContent = currentBalance;
+            amountInput.value = "";
+        }
+
+        function takeLoan(player) {
+            const balanceCell = document.getElementById(`balance-${player}`);
+            let currentBalance = parseFloat(balanceCell.textContent);
+            currentBalance += 1500;
+            balanceCell.textContent = currentBalance;
+            alert(`Joueur ${player} a pris un crédit de 1500 €.`);
+        }
+
+        function repayLoan(player) {
+            const balanceCell = document.getElementById(`balance-${player}`);
+            let currentBalance = parseFloat(balanceCell.textContent);
+            const repaymentAmount = 1650;
+            if (currentBalance >= repaymentAmount) {
+                currentBalance -= repaymentAmount;
+                balanceCell.textContent = currentBalance;
+                alert(`Joueur ${player} a remboursé son crédit avec 10% d'intérêt.`);
+            } else {
+                alert(`Joueur ${player} n'a pas assez de solde pour rembourser le crédit.`);
+            }
+        }
+
+        function rollDice() {
+            const diceResult = Math.floor(Math.random() * 6) + 1;
+            document.getElementById("dice-result").textContent = `Résultat : ${diceResult}`;
+        }
+
+        function calculate(operation) {
+            const numbers = [];
+            for (let i = 1; i <= 10; i++) {
+                const num = parseFloat(document.getElementById(`calc-num${i}`).value);
+                if (!isNaN(num)) {
+                    numbers.push(num);
+                }
+            }
+
+            if (numbers.length === 0) {
+                alert("Veuillez entrer au moins un nombre valide.");
+                return;
+            }
+
+            let result = numbers[0];
+            for (let i = 1; i < numbers.length; i++) {
+                switch (operation) {
+                    case 'add':
+                        result += numbers[i];
+                        break;
+                    case 'subtract':
+                        result -= numbers[i];
+                        break;
+                    case 'multiply':
+                        result *= numbers[i];
+                        break;
+                    case 'divide':
+                        if (numbers[i] === 0) {
+                            alert("Division par zéro impossible.");
+                            return;
+                        }
+                        result /= numbers[i];
+                        break;
+                    default:
+                        alert("Opération inconnue.");
+                        return;
+                }
+            }
+
+            document.getElementById('calc-result').textContent = `Résultat : ${result}`;
+        }
+    </script>
+</body>
+</html>
