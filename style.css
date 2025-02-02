@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+th:nth-child(2), td:nth-child(2) { /* Agrandissement de la colonne "Solde (€)" */
+    width: 180px;
+    font-size: 18px;
+}
+
+button {
+    font-size: 16px;
+    padding: 8px;
+    cursor: pointer;
+    width: 60px;
+}
+
+input {
+    width: 60px;
+    text-align: center;
+}
+
+.dice-container {
+    margin: 20px auto;
+    text-align: center;
+}
+
+#dice-result {
+    font-size: 50px;
+    margin: 10px;
+}
+
+.calculator {
+    width: 300px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 3px solid black;
+    border-radius: 10px;
+    background: #f8f8f8;
+}
+
+#calc-screen {
+    background: black;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    text-align: right;
+    margin-bottom: 10px;
+}

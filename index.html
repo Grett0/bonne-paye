@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banque - La Bonne Paye</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Banque - La Bonne Paye</h1>
+
+    <label for="numPlayers">Nombre de joueurs :</label>
+    <select id="numPlayers" onchange="initializePlayers()">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6" selected>6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Joueur</th>
+                <th>Solde (€)</th>
+                <th>Jour</th>
+                <th>Crédits</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="players">
+            <!-- Les joueurs seront ajoutés dynamiquement ici -->
+        </tbody>
+    </table>
+
+    <div class="dice-container">
+        <h2>Dé à 6 faces</h2>
+        <div id="dice-result">🎲</div>
+        <button onclick="rollDice()">Lancer</button>
+    </div>
+
+    <div class="calculator">
+        <h2>Calculatrice</h2>
+        <div id="calc-screen">0</div>
+        <div class="calc-buttons">
+            <div class="numbers">
+                <button onclick="calcInput('7')">7</button>
+                <button onclick="calcInput('8')">8</button>
+                <button onclick="calcInput('9')">9</button>
+                <button onclick="calcInput('4')">4</button>
+                <button onclick="calcInput('5')">5</button>
+                <button onclick="calcInput('6')">6</button>
+                <button onclick="calcInput('1')">1</button>
+                <button onclick="calcInput('2')">2</button>
+                <button onclick="calcInput('3')">3</button>
+                <button onclick="calcClear()">C</button>
+                <button onclick="calcInput('0')">0</button>
+                <button onclick="calcCalculate()">=</button>
+            </div>
+            <div class="operations">
+                <button onclick="calcOperation('+')">+</button>
+                <button onclick="calcOperation('-')">-</button>
+                <button onclick="calcOperation('*')">×</button>
+                <button onclick="calcOperation('/')">÷</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
