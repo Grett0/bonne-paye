@@ -51,7 +51,7 @@ function takeLoan(player) {
 
 function repayLoan(player) {
     if (players[player].creditCount > 0) {
-        let repayment = Math.ceil(1500 * 1.1); // Arrondi à l'unité supérieure
+        let repayment = Math.ceil(1650);
         if (players[player].balance >= repayment) {
             players[player].balance -= repayment;
             players[player].creditCount--;
